@@ -249,8 +249,10 @@ class PathPreserver {
       // In the case the folder is really a folder, but not executable, we need
       // to change that, so we can check if the file really exists.
       elseif (!is_executable($current_folder)) {
-        $reset_perms[$current_folder] = fileperms($current_folder);
-        chmod($current_folder, 0755);
+        if (!Platform::isWindows()) {
+          $reset_perms[$current_folder] = fileperms($current_folder);
+          chmod($current_folder, 0755);
+        }
       }
     }
 
